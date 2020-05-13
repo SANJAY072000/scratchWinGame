@@ -1,5 +1,7 @@
 import React,{Component} from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
+import {
+  StyleSheet, Text, View, TouchableOpacity, Dimensions, Alert
+} from 'react-native';
 import {Button} from 'native-base';
 import {FontAwesome} from '@expo/vector-icons';
 
@@ -11,7 +13,8 @@ export default class App extends Component {
     super(props);
     this.state = {
       randomNumber:'',
-      isScratched:false
+      isScratched:false,
+      count:0
     };
   }
 
@@ -26,9 +29,14 @@ return randomNumber;
 }
 
 scratchItem=itemNumber=>{
+  if(this.state.count!=5){
   if(this.state.randomNumber===itemNumber)itemArray[itemNumber]='Lucky';
   else itemArray[itemNumber]='Unlucky';
+  let count=this.state.count+1;
+  this.setState({count});
   this.forceUpdate();
+}
+  else Alert.alert('You cannot click more than 5');
 }
 
 scratchItemIcon=itemNumber=>{
@@ -149,10 +157,12 @@ resetGame=()=>this.setState({randomNumber:this.generateRandomNumber()},
           </TouchableOpacity>
         </View>
       </View>
-      <Button full success rounded style={styles.button} onPress={this.showAllItem.bind(this)}>
+      <Button full success rounded style={styles.button}
+        onPress={this.showAllItem.bind(this)}>
         <Text style={styles.buttontext}>Show All Coupons</Text>
       </Button>
-      <Button full info rounded style={styles.button} onPress={this.resetGame.bind(this)}>
+      <Button full info rounded style={styles.button}
+        onPress={this.resetGame.bind(this)}>
         <Text style={styles.buttontext}>Reset</Text>
       </Button>
       </View>
@@ -165,7 +175,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
   },
   grid:{
 
