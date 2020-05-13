@@ -57,7 +57,7 @@ showAllItem=()=>{
   this.forceUpdate();
 }
 
-resetGame=()=>this.setState({randomNumber:this.generateRandomNumber()},
+resetGame=()=>this.setState({randomNumber:this.generateRandomNumber(),count:0},
 ()=>{
   itemArray.fill('empty');
   this.forceUpdate();
