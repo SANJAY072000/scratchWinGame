@@ -40,23 +40,27 @@ scratchItemIcon=itemNumber=>{
 scratchItemColor=itemNumber=>{
   if(itemArray[itemNumber]==='Lucky')return 'green';
   else if(itemArray[itemNumber]==='Unlucky')return 'red';
-  else return 'blue';
+  else return 'black';
 }
 
 showAllItem=()=>{
   itemArray.fill('Unlucky');
   itemArray[this.state.randomNumber]='Lucky';
+  this.forceUpdate();
 }
 
 resetGame=()=>this.setState({randomNumber:this.generateRandomNumber()},
-()=>itemArray.fill('empty'))
+()=>{
+  itemArray.fill('empty');
+  this.forceUpdate();
+})
 
 
   render(){
     return(
       <View style={styles.container}>
-      <View>
-        <Text>Scratch Win Game</Text>
+      <View style={styles.topbar}>
+        <Text style={styles.toptext}>Scratch Win Game</Text>
       </View>
       <View style={styles.grid}>
         <View style={styles.itemrow}>
@@ -145,6 +149,12 @@ resetGame=()=>this.setState({randomNumber:this.generateRandomNumber()},
           </TouchableOpacity>
         </View>
       </View>
+      <Button full success rounded style={styles.button} onPress={this.showAllItem.bind(this)}>
+        <Text style={styles.buttontext}>Show All Coupons</Text>
+      </Button>
+      <Button full info rounded style={styles.button} onPress={this.resetGame.bind(this)}>
+        <Text style={styles.buttontext}>Reset</Text>
+      </Button>
       </View>
     );
   }
@@ -169,5 +179,25 @@ const styles = StyleSheet.create({
     borderWidth:2,
     borderColor:'black',
     minWidth:70
+  },
+  button:{
+    margin:15
+  },
+  buttontext:{
+    color:'#fff',
+    fontSize:18
+  },
+  topbar:{
+    backgroundColor:'#8B78E6',
+    height:50,
+    justifyContent:'center',
+    width:Dimensions.get('window').width,
+    alignItems:'center',
+    marginVertical:20
+  },
+  toptext:{
+    fontWeight:'bold',
+    fontSize:20,
+    color:'white'
   }
 });
